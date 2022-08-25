@@ -1,0 +1,258 @@
+-----------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+
+ 
+
+class App{
+    static public void main(String[]args){
+       
+
+        insert();
+        fetch();
+        delete();
+    }
+
+    public static void insert(){
+
+        try{
+            String driver,url,user,password;
+            driver="com.mysql.cj.jdbc.Driver";
+            url="jdbc:mysql://localhost:3306/mydatabase";
+            user="root";
+            password="Password123";
+            String sql=null;
+            Connection con=null;
+            Statement st=null;
+            ResultSet rs=null;
+            int id;
+            String bname;
+            double bprice;
+            Scanner scan=new Scanner(System.in);
+            Class.forName(driver);
+            con=DriverManager.getConnection(url,user,password);
+            st=con.createStatement();
+
+            System.out.println("Enter id");
+            id=scan.nextInt();
+            scan.nextLine();
+            System.out.println("Enter book name");
+            bname=scan.nextLine();
+            System.out.println("Enter price");
+            bprice=scan.nextDouble();
+
+
+            sql="insert into Book values("+id+",'"+bname+"',"+bprice+")";
+            int n=st.executeUpdate(sql);
+            
+            if(n>=0)
+                System.out.println(n+" records affected");       
+            
+                       
+        }
+        catch(ClassNotFoundException e1){
+            System.out.println(e1.getMessage());
+        }
+        catch(SQLException e2){
+            System.out.println(e2.getMessage());
+        }
+    }
+
+
+    public static void fetch(){
+
+
+        try{
+            String driver,url,user,password;
+            driver="com.mysql.cj.jdbc.Driver";
+            url="jdbc:mysql://localhost:3306/mydatabase";
+            user="root";
+            password="Password123";
+            String sql=null;
+            Connection con=null;
+            Statement st=null;
+            ResultSet rs=null;
+           
+            Class.forName(driver);
+            con=DriverManager.getConnection(url,user,password);
+            st=con.createStatement();
+
+            sql="select*from Book";
+            rs=st.executeQuery(sql);
+            while(rs.next()){
+            
+                System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getDouble(3));
+            }                  
+            
+                       
+        }
+        catch(ClassNotFoundException e1){
+            System.out.println(e1.getMessage());
+        }
+        catch(SQLException e2){
+            System.out.println(e2.getMessage());
+        }
+
+    }
+
+
+    public static void delete(){
+
+        try{
+            String driver,url,user,password;
+            driver="com.mysql.cj.jdbc.Driver";
+            url="jdbc:mysql://localhost:3306/mydatabase";
+            user="root";
+            password="Password123";
+            String sql=null;
+            Connection con=null;
+            Statement st=null;
+            ResultSet rs=null;
+            int id;
+            Scanner scan=new Scanner(System.in);
+            Class.forName(driver);
+            con=DriverManager.getConnection(url,user,password);
+            st=con.createStatement();
+
+            System.out.println("Enter id");
+            id=scan.nextInt();
+            
+            sql="delete from Book where id='+id+'";
+            int n=st.executeUpdate(sql);
+            
+            if(n>=0)
+                System.out.println(n+" records affected");       
+            
+                       
+        }
+        catch(ClassNotFoundException e1){
+            System.out.println(e1.getMessage());
+        }
+        catch(SQLException e2){
+            System.out.println(e2.getMessage());
+        }
+    }
+
+
+    }
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+
+
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+
+ 
+
+class TestDBTransactions{
+    static public void main(String[]args){
+        String driver,url,user,password;
+        driver="com.mysql.cj.jdbc.Driver";
+        url="jdbc:mysql://localhost:3306/batch5";
+        user="root";
+        password="root";
+        String sql=null;
+        Connection con=null;
+        Statement st=null;
+        ResultSet rs=null;
+        /*int isbn;
+        String title,genre;
+        double price;
+        Scanner scan=new Scanner(System.in);*/
+
+ 
+
+        try{
+            Class.forName(driver);
+            con=DriverManager.getConnection(url,user,password);
+            st=con.createStatement();
+
+ 
+
+            /*if(con!=null)
+                System.out.println("Connection successful");
+            else
+                System.out.println("Connection failed");*/
+
+ 
+
+            /*System.out.println("Enter isbn");
+            isbn=scan.nextInt();
+            scan.nextLine();
+            System.out.println("Enter title");
+            title=scan.nextLine();
+            System.out.println("Enter price");
+            price=scan.nextDouble();
+            scan.nextLine();
+            System.out.println("Enter genre");
+            genre=scan.nextLine();*/
+
+ 
+
+            //sql="insert into book values(13,'C++',1500,'Science')";
+            //numeric var  "+var name+"
+            //non numeric var '"+var name+"'
+
+ 
+
+            //sql="insert into book values("+isbn+",'"+title+"',"+price+",'"+genre+"')";
+        
+            //sql="delete from book where isbn=1234";
+
+ 
+
+            /*sql="update book set title='cpp' where isbn=13";
+            int n=st.executeUpdate(sql);
+            
+            if(n>=0)
+                System.out.println(n+" records affected");        
+            */
+
+ 
+
+            sql="select*from book";
+            rs=st.executeQuery(sql);
+            while(rs.next()){
+                //System.out.println(rs.getInt("isbn")+" "+rs.getString("title"));
+                System.out.println(rs.getInt(1)+" "+rs.getString(2));
+            }            
+        }
+        catch(ClassNotFoundException e1){
+            System.out.println(e1.getMessage());
+        }
+        catch(SQLException e2){
+            System.out.println(e2.getMessage());
+        }
+    }
+}
+
+throws SQLException, ClassNotFoundException
+ 
+
+//for execution
+//java -cp mysql-connector-java-8.0.29.jar; DBConnectionTest
+
+ 
+
+//next(), previous(), first, last(), isFirst(), isLast(), isBeforeFirst(), isAfterLast()...
+//get***(), getInt(), getString(), getFloat(),...
+//get***(int colindex)
+//get***(String colname)
